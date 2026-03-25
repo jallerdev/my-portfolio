@@ -1,243 +1,146 @@
-"use client"
+"use client";
 
-import React, { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { Card } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Github, Linkedin, Mail, ArrowDown, Code2 } from "lucide-react"
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Github, Linkedin, Mail, ArrowDown } from "lucide-react";
 
-const Cover = () => {
-  const [currentTitle, setCurrentTitle] = useState(0)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_mounted, setMounted] = useState(false)
-  const [particles, setParticles] = useState<
-    Array<{
-      id: number
-      initialX: number
-      initialY: number
-      targetX: number
-      targetY: number
-      duration: number
-    }>
-  >([])
+const fadeUp = {
+  opacity: 1,
+  y: 0,
+  transition: { duration: 0.6, ease: "easeOut" },
+};
 
-  useEffect(() => {
-    setMounted(true)
-    setParticles(
-      Array.from({ length: 50 }, (_, i) => ({
-        id: i,
-        initialX: Math.random() * 100,
-        initialY: Math.random() * 100,
-        targetX: Math.random() * 100,
-        targetY: Math.random() * 100,
-        duration: Math.random() * 10 + 20,
-      }))
-    )
-  }, [])
-
-  const titles = [
-    "Full Stack Developer (Mid-Level)",
-    "Node.js & NestJS Backend Developer",
-    "React & Next.js Frontend Developer",
-    "Cloud & DevOps (AWS, K8s, Terraform)",
-  ]
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentTitle((prev) => (prev + 1) % titles.length)
-    }, 3000)
-    return () => clearInterval(interval)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.3,
-      },
-    },
-  }
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: "spring" as const,
-        stiffness: 100,
-        damping: 10,
-      },
-    },
-  }
+export default function Cover() {
+  const scrollToNext = () => {
+    window.scrollTo({
+      top: window.innerHeight,
+      behavior: "smooth",
+    });
+  };
 
   return (
-    <div className="relative min-h-screen w-full overflow-hidden bg-linear-to-br from-zinc-900 via-zinc-800 to-blue-900/20">
-      <div className="absolute inset-0 overflow-hidden">
-        {particles.map((particle) => (
-          <motion.div
-            key={particle.id}
-            className="absolute w-1 h-1 bg-blue-400/30 rounded-full"
-            style={{
-              left: `${particle.initialX}%`,
-              top: `${particle.initialY}%`,
-            }}
-            animate={{
-              left: `${particle.targetX}%`,
-              top: `${particle.targetY}%`,
-            }}
-            transition={{
-              duration: particle.duration,
-              repeat: Infinity,
-              ease: "linear",
-              repeatType: "reverse",
-            }}
-          />
-        ))}
-      </div>
+    <section className="relative min-h-screen overflow-hidden bg-zinc-950">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(59,130,246,0.18),_transparent_45%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_bottom,_rgba(24,24,27,0.1),_rgba(24,24,27,0.95))]" />
 
-      <div className="relative z-10 container mx-auto px-4 py-12 min-h-screen flex items-center justify-center">
-        <Card className="w-full max-w-5xl bg-zinc-900/50 backdrop-blur-xl border-zinc-700/50 shadow-2xl">
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="p-8 md:p-12 lg:p-16"
+      <div className="relative z-10 container mx-auto flex min-h-screen max-w-6xl items-center px-6 py-20">
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={{
+            visible: {
+              transition: {
+                staggerChildren: 0.12,
+              },
+            },
+          }}
+          className="w-full"
+        >
+          <motion.span
+            variants={fadeUp}
+            className="mb-4 inline-flex rounded-full border border-blue-500/20 bg-blue-500/10 px-4 py-1 text-sm text-blue-300"
           >
-            <motion.div
-              variants={itemVariants}
-              className="flex justify-center mb-6"
+            Available for Full Stack, Backend and Cloud-focused roles
+          </motion.span>
+
+          <motion.h1
+            variants={fadeUp}
+            className="max-w-4xl text-5xl font-bold tracking-tight text-white md:text-7xl"
+          >
+            Luis Jaller
+          </motion.h1>
+
+          <motion.h2
+            variants={fadeUp}
+            className="mt-4 max-w-3xl text-2xl font-semibold text-blue-400 md:text-3xl"
+          >
+            Full Stack Engineer focused on TypeScript, Node.js, Next.js and AWS
+          </motion.h2>
+
+          <motion.p
+            variants={fadeUp}
+            className="mt-6 max-w-3xl text-lg leading-8 text-zinc-300 md:text-xl"
+          >
+            I build scalable web applications and cloud-backed systems with a
+            strong focus on backend architecture, maintainability and delivery.
+          </motion.p>
+
+          <motion.p
+            variants={fadeUp}
+            className="mt-4 max-w-3xl text-base leading-7 text-zinc-400 md:text-lg"
+          >
+            My experience spans product development, APIs, microservices,
+            infrastructure as code and modern deployment workflows.
+          </motion.p>
+
+          <motion.div
+            variants={fadeUp}
+            className="mt-10 flex flex-wrap items-center gap-4"
+          >
+            <Button
+              asChild
+              size="lg"
+              className="bg-blue-600 text-white hover:bg-blue-500"
             >
-              <div className="relative">
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{
-                    duration: 20,
-                    repeat: Infinity,
-                    ease: "linear",
-                  }}
-                  className="absolute inset-0 bg-linear-to-r from-blue-500 to-blue-600 rounded-full blur-xl opacity-30"
-                />
-                <Code2 className="w-16 h-16 text-blue-500 relative z-10" />
-              </div>
-            </motion.div>
+              <a href="#projects">View Projects</a>
+            </Button>
 
-            <motion.h1
-              variants={itemVariants}
-              className="text-4xl md:text-6xl lg:text-7xl font-bold text-center mb-4 bg-linear-to-r from-blue-200 via-blue-400 to-blue-500 bg-clip-text text-transparent"
+            <Button
+              asChild
+              size="lg"
+              variant="outline"
+              className="border-zinc-700 bg-zinc-900/50 text-zinc-200 hover:border-blue-500 hover:bg-zinc-900 hover:text-blue-500"
             >
-              Luis Jaller
-            </motion.h1>
-
-            <motion.div
-              variants={itemVariants}
-              className="h-12 md:h-16 flex items-center justify-center mb-6"
-            >
-              <AnimatePresence mode="wait">
-                <motion.h2
-                  key={currentTitle}
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  exit={{ y: -20, opacity: 0 }}
-                  transition={{ duration: 0.5 }}
-                  className="text-2xl md:text-3xl lg:text-4xl font-semibold text-blue-400"
-                >
-                  {titles[currentTitle]}
-                </motion.h2>
-              </AnimatePresence>
-            </motion.div>
-
-            <motion.p
-              variants={itemVariants}
-              className="text-lg md:text-xl text-zinc-300 text-center max-w-3xl mx-auto mb-8 leading-relaxed"
-            >
-              Mid-level Full Stack Developer with experience in Node.js, 
-              NestJS, React, Next.js and Expo. Focused on building scalable, 
-              maintainable web and mobile applications, with cloud experience in AWS,
-              Kubernetes and Terraform
-            </motion.p>
-
-            <motion.div
-              variants={itemVariants}
-              className="flex flex-wrap justify-center gap-4"
-            >
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Button
-                  size="lg"
-                  className="p-2 bg-linear-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white shadow-lg shadow-blue-500/50"
-                  asChild
-                >
-                  <a
-                    href="https://github.com/jallerangel"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Github/>
-                  </a>
-                </Button>
-              </motion.div>
-
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="p-2 border-blue-500 text-blue-400 hover:bg-blue-500/10 hover:text-blue-300"
-                  asChild
-                >
-                  <a
-                    href="https://www.linkedin.com/in/jallerangel/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Linkedin/>
-                  </a>
-                </Button>
-              </motion.div>
-
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="p-2 border-blue-500 text-blue-400 hover:bg-blue-500/10 hover:text-blue-300"
-                  asChild
-                >
-                  <a href="mailto:jallerangel06@gmail.com">
-                    <Mail/>
-                  </a>
-                </Button>
-              </motion.div>
-            </motion.div>
-
-            <motion.div
-              variants={itemVariants}
-              className="flex justify-center mt-12"
-              onClick={() => window.scrollTo({ top: window.innerHeight, behavior: "smooth" })}
-            >
-              <motion.div
-                animate={{ y: [0, 10, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-                className="text-blue-400"
-              >
-                <ArrowDown className="w-8 h-8 cursor-pointer" />
-              </motion.div>
-            </motion.div>
+              <a href="#contact">
+                <Mail className="mr-2 h-4 w-4" />
+                Contact Me
+              </a>
+            </Button>
           </motion.div>
-        </Card>
-      </div>
-    </div>
-  )
-}
 
-export default Cover
+          <motion.div
+            variants={fadeUp}
+            className="mt-8 flex flex-wrap items-center gap-3"
+          >
+            <a
+              href="https://github.com/jallerangel"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-lg border border-zinc-800 bg-zinc-900/60 px-4 py-2 text-sm text-zinc-300 transition hover:border-blue-500/50 hover:text-white"
+            >
+              <Github className="h-4 w-4" />
+              GitHub
+            </a>
+
+            <a
+              href="https://www.linkedin.com/in/jallerangel"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-lg border border-zinc-800 bg-zinc-900/60 px-4 py-2 text-sm text-zinc-300 transition hover:border-blue-500/50 hover:text-white"
+            >
+              <Linkedin className="h-4 w-4" />
+              LinkedIn
+            </a>
+
+            <a
+              href="mailto:jallerangel06@gmail.com"
+              className="inline-flex items-center gap-2 rounded-lg border border-zinc-800 bg-zinc-900/60 px-4 py-2 text-sm text-zinc-300 transition hover:border-blue-500/50 hover:text-white"
+            >
+              <Mail className="h-4 w-4" />
+              jallerangel06@gmail.com
+            </a>
+          </motion.div>
+
+          <motion.button
+            variants={fadeUp}
+            onClick={scrollToNext}
+            className="mt-16 inline-flex items-center gap-2 text-sm text-zinc-400 transition hover:text-blue-400"
+          >
+            Scroll to explore
+            <ArrowDown className="h-4 w-4" />
+          </motion.button>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
